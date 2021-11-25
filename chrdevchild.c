@@ -32,7 +32,7 @@ static ssize_t chrdevbase_read(struct file *filp, __user char *buf, size_t count
 {
 //    printk("char device base read\r\n");
 
-    copy_to_user
+//    copy_to_user()
     return 0;
 }
 
