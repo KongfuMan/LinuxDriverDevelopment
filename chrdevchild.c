@@ -31,7 +31,7 @@ static int chrdevbase_release(struct inode *inode, struct file *filp)
 static ssize_t chrdevbase_read(struct file *filp, __user char *buf, size_t count, loff_t *ppos)
 {
 //    printk("char device base read\r\n");
-
+      //
 //    copy_to_user()
     return 0;
 }
