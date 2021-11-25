@@ -70,7 +70,7 @@ static struct file_operations chrdevbase_fops={
     .write = chrdevbase_write
 };
 
-static int __init test_init(void)
+static int __init newchrdev_init(void)
 {
     int ret = 0;
     printk(KERN_EMERG"Load module\r\n");
