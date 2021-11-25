@@ -1,1 +1,7 @@
 .idea
+*.order
+*.o
+*.ko
+*.cmd
+*.symvers
+

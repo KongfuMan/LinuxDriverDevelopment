@@ -6,6 +6,8 @@
 #include<linux/module.h>
 #include<linux/kernel.h>
 #include<linux/fs.h>
+#include <linux/string.h>
+#include <linux/uaccess.h>
 MODULE_LICENSE("GPL");
 
 
@@ -14,7 +16,7 @@ MODULE_LICENSE("GPL");
 
 static char readbuf[100];
 static char writebuf[100];
-static char krldate={"kernel data liang!"};
+static char krldate[] = {"kernel data liang!"};
 
 static int chrdevbase_open(struct inode *inode, struct file *filp)
 {
@@ -30,15 +32,33 @@ static int chrdevbase_release(struct inode *inode, struct file *filp)
 
 static ssize_t chrdevbase_read(struct file *filp, __user char *buf, size_t count, loff_t *ppos)
 {
+    int ret = 0;
 //    printk("char device base read\r\n");
-      //
-//    copy_to_user()
+    memcpy(readbuf, krldate, sizeof(krldate));
+
+    //copy the readbuf(kernel space data) to user space
+    ret = copy_to_user(buf, readbuf, count);
+    if (ret <= 0){
+
+    }else{
+        //failed
+        return -1;
+    }
     return 0;
 }
 
 static ssize_t chrdevbase_write(struct file *filp, const char *buf, size_t count, loff_t *ppos)
 {
-    printk("char device base write\r\n");
+    int ret = 0;
+//    printk("char device base write\r\n");
+    ret = copy_from_user(writebuf, buf, count);
+    if (ret == 0){
+        printk("received data from user: %s\r\n", writebuf);
+
+    }else{
+        //failed
+        return -1;
+    }
     return 0;
 }
 
