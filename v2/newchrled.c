@@ -31,19 +31,19 @@ static char readbuf[100];
 static char writebuf[100];
 static char krldate[] = {"kernel data liang!"};
 
-static int chrdevbase_open(struct inode *inode, struct file *filp)
+static int newchrled_open(struct inode *inode, struct file *filp)
 {
     printk("char device base open\r\n");
     return 0;
 }
 
-static int chrdevbase_release(struct inode *inode, struct file *filp)
+static int newchrled_release(struct inode *inode, struct file *filp)
 {
     printk("char device base release\r\n");
     return 0;
 }
 
-static ssize_t chrdevbase_read(struct file *filp, __user char *buf, size_t count, loff_t *ppos)
+static ssize_t newchrled_read(struct file *filp, __user char *buf, size_t count, loff_t *ppos)
 {
     int ret = 0;
 //    printk("char device base read\r\n");
@@ -60,7 +60,7 @@ static ssize_t chrdevbase_read(struct file *filp, __user char *buf, size_t count
     return 0;
 }
 
-static ssize_t chrdevbase_write(struct file *filp, const char *buf, size_t count, loff_t *ppos)
+static ssize_t newchrled_write(struct file *filp, const char *buf, size_t count, loff_t *ppos)
 {
     int ret = 0;
 //    printk("char device base write\r\n");
@@ -75,12 +75,12 @@ static ssize_t chrdevbase_write(struct file *filp, const char *buf, size_t count
     return 0;
 }
 
-static const struct file_operations chrdevbase_fops={
+static const struct file_operations newchrled_fops={
         .owner = THIS_MODULE,
-        .open = chrdevbase_open,
-        .release = chrdevbase_release,
-        .read = chrdevbase_read,
-        .write = chrdevbase_write
+        .open = newchrled_open,
+        .release = newchrled_release,
+        .read = newchrled_read,
+        .write = newchrled_write
 };
 
 static int __init newchrled_init(void)
@@ -106,7 +106,7 @@ static int __init newchrled_init(void)
 
     // 2. register char device
     newchrled.cdev.owner= THIS_MODULE;
-    cdev_init(&newchrled.cdev, &chrdevbase_fops);
+    cdev_init(&newchrled.cdev, &newchrled_fops);
     ret = cdev_add(&newchrled.cdev, newchrled.devid, NEWCHRLED_COUNT);
 
     // 3. Create device node under /dev/
