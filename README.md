@@ -4,3 +4,15 @@ This is Linux kernel driver development project.
     - Driver module implementing linux driver unified API: open/close, read/write
     - Make a device node that associate with the driver 
     - Application that read/write from the device using driver API
+  
+
+
+
+
+
+
+
+
+
+REFERENCE:
+[video](https://www.bilibili.com/video/BV1fJ411i7PB?p=12)
