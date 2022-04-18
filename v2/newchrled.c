@@ -34,6 +34,9 @@ static char krldate[] = {"kernel data liang!"};
 static int newchrled_open(struct inode *inode, struct file *filp)
 {
     printk("char device base open\r\n");
+    // set private data  as device instance, such that device instance is accessible
+    // from read/write function
+    filp->private_date = &newchrled;
     return 0;
 }
 
