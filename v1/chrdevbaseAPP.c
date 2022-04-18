@@ -11,8 +11,8 @@
 
 
 /** This is the application that read/write from the device
- * "./chrdevbaseAPP ./dev/chrdevchild 1"  represents Read from device
- * "./chrdevbaseAPP ./dev/chrdevchild 2"  represents Write into device
+ * "./chrdevbaseAPP /dev/chrdevchild 1"  represents Read from device
+ * "./chrdevbaseAPP /dev/chrdevchild 2"  represents Write into device
  * */
 int main(int argc, char *argv[]){
     if (argc != 3){
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]){
     char buf[100];
     char write_buf[100];
     static char usr_data[] = {"user data"};
-    fd = open(file_name, O_RDWR);
+    fd = open(file_name, O_RDWR);  //open device `file_name`
     if (fd < 0){
         printf("Cannot open file '%s' \r\n", file_name);
         return -1;
