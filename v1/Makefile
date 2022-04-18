@@ -1,6 +1,8 @@
 KERNELROOT:=/lib/modules/$(shell uname -r)/
 KERNELDIR:=/lib/modules/$(shell uname -r)/build
 PASSWORD:=qqq
+APPNAME:=chrdevbaseAPP
+MODULENAME:=chrdevchild
 obj-m+= chrdevchild.o
 
 CURRENT_PATH:= $(shell pwd)
@@ -14,24 +16,24 @@ clear_printk:
 	$(shell echo $(PASSWORD)  |  sudo -S dmesg -C)
 
 cp_module:
-	$(shell echo $(PASSWORD)  |  sudo -S cp $(CURRENT_PATH)/chrdevchild.ko $(KERNELROOT) -f)
+	$(shell echo $(PASSWORD)  |  sudo -S cp $(CURRENT_PATH)/$(MODULENAME).ko $(KERNELROOT) -f)
 
 dep_module:
 	$(shell echo $(PASSWORD)  |  sudo -S depmod)
 
 load_module:
-	$(shell echo $(PASSWORD)  |  sudo -S modprobe chrdevchild)
+	$(shell echo $(PASSWORD)  |  sudo -S modprobe $(MODULENAME))
 
-refresh_dev_node:
-	$(shell echo $(PASSWORD)  |  sudo -S rm /dev/chrdevchild)
-	$(shell echo $(PASSWORD)  |  sudo -S mknod /dev/chrdevchild c 200 0)
+refresh_dev_node: #create device node (chrdevchild) under the /dev folder
+	$(shell echo $(PASSWORD)  |  sudo -S rm /dev/$(MODULENAME))
+	$(shell echo $(PASSWORD)  |  sudo -S mknod /dev/$(MODULENAME) c 200 0)
 
 unload_module:
-	$(shell echo $(PASSWORD)  |  sudo -S rmmod chrdevchild)
+	$(shell echo $(PASSWORD)  |  sudo -S rmmod $(MODULENAME))
 
-application:
-	$(CC) ./chrdevbaseAPP.c -o chrdevbaseAPP
-	$(shell echo $(PASSWORD)  |  sudo -S cp $(CURRENT_PATH)/chrdevbaseAPP $(KERNELROOT) -f)
+application: #compile application code into binary and copy into target folder
+	$(CC) ./$(APPNAME).c -o $(APPNAME)
+	$(shell echo $(PASSWORD)  |  sudo -S cp $(CURRENT_PATH)/$(APPNAME) $(KERNELROOT) -f)
 
 clean:
 	$(MAKE) -C $(KERNELDIR) M=$(CURRENT_PATH) clean

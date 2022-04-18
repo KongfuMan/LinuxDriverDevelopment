@@ -10,7 +10,7 @@
 #include <string.h>
 
 
-/**
+/** This is the application that read/write from the device
  * "./chrdevbaseAPP ./dev/chrdevchild 1"  represents Read from device
  * "./chrdevbaseAPP ./dev/chrdevchild 2"  represents Write into device
  * */
