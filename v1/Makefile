@@ -22,7 +22,6 @@ dep_module:
 load_module:
 	$(shell echo $(PASSWORD)  |  sudo -S modprobe chrdevchild)
 
-
 refresh_dev_node:
 	$(shell echo $(PASSWORD)  |  sudo -S rm /dev/chrdevchild)
 	$(shell echo $(PASSWORD)  |  sudo -S mknod /dev/chrdevchild c 200 0)
