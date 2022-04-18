@@ -3,7 +3,7 @@ KERNELDIR:=/lib/modules/$(shell uname -r)/build
 PASSWORD:=qqq
 APPNAME:=chrdevbaseAPP
 MODULENAME:=chrdevchild
-obj-m+= chrdevchild.o
+obj-m+= $(MODULENAME).o
 
 CURRENT_PATH:= $(shell pwd)
 
