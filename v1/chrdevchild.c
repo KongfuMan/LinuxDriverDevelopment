@@ -84,7 +84,7 @@ static int __init newchrdev_init(void)
     }
     return 0;
 }
-static void __exit test_exit(void)
+static void __exit newchrdev_exit(void)
 {
     printk(KERN_EMERG"Unload module\r\n");
     unregister_chrdev(CHARDEVBASE_MAJOR, CHARDEV_NAME);
@@ -92,5 +92,5 @@ static void __exit test_exit(void)
 }
 
 // fn will be executed when load / unload module
-module_init(test_init);
-module_exit(test_exit);
+module_init(newchrdev_init);
+module_exit(newchrdev_exit);
